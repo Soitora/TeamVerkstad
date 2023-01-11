@@ -1,0 +1,89 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto';
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    flex-direction: column;
+    background: #e0eafc;
+    background: -webkit-linear-gradient(to right, #cfdef3, #e0eafc);
+    background: linear-gradient(to right, #cfdef3, #e0eafc);
+}
+
+.container {
+    min-width: 650px;
+    padding: 30px;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: #959da533 0px 8px 24px;
+    white-space: pre-wrap;
+}
+
+.drag-area {
+    height: 400px;
+    border: 3px dashed #e0eafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 10px auto;
+}
+
+h3 {
+    margin-bottom: 20px;
+    font-weight: 500;
+}
+
+.drag-area .icon {
+    display: contents;
+    font-size: 50px;
+    color: #1683ff;
+}
+
+.drag-area .header {
+    font-size: 20px;
+    font-weight: 500;
+    color: #34495e;
+}
+
+.drag-area .support {
+    font-size: 12px;
+    color: gray;
+    margin: 10px 0 15px 0;
+}
+
+.drag-area .button {
+    font-size: 20px;
+    font-weight: 500px;
+    color: #1683ff;
+    cursor: pointer;
+}
+
+.drag-area * {
+    pointer-events: none;
+}
+
+.drag-area.active {
+    border: 2px solid #1683ff;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table tr {
+    border-bottom: 1px solid #e0eafc;
+}
+
+table thead th {
+    text-align: left;
+    padding-right: 8px;
+}
