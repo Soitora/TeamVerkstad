@@ -9,7 +9,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
     flex-direction: column;
     background: #e0eafc;
     background: -webkit-linear-gradient(to right, #cfdef3, #e0eafc);
@@ -18,6 +17,7 @@ body {
 
 .container {
     min-width: 650px;
+    margin: 30px;
     padding: 30px;
     background: #ffffff;
     border-radius: 20px;
@@ -85,5 +85,9 @@ table tr {
 
 table thead th {
     text-align: left;
-    padding-right: 8px;
+    padding-right: 1em;
+}
+
+table tbody td {
+    padding-right: 1em;
 }
