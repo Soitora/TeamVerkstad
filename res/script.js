@@ -60,7 +60,7 @@ $(document).ready(function () {
 			fileReader.onload = () => {
 				let fileContent = fileReader.result
 				let processedFile = processFile(fileContent, fileType)
-				postFileProcessing(processedFile)
+				postFileProcessing(processedFile, fileName)
 			}
 			fileReader.readAsText(file, "ISO-8859-1")
 		} else {
@@ -109,7 +109,7 @@ $(document).ready(function () {
 		return fileRowResult
 	}
 
-	function postFileProcessing(processedFile) {
+	function postFileProcessing(processedFile, fileName) {
 		$container.html(`<table id="processed"><thead></thead><tbody></tbody></table>`)
 
 		let fileIdentifier = `
@@ -118,7 +118,7 @@ $(document).ready(function () {
 		$(".container").prepend(fileIdentifier)
 
 		createTable(processedFile)
-		downloader(processedFile)
+		downloader(processedFile, fileName)
 	}
 
 	// Create table from data
@@ -179,7 +179,7 @@ $(document).ready(function () {
 		})
 	}
 
-	function downloader(file) {
+	function downloader(file, fileName) {
 		let FIL_OBJEKT = []
 		let FIRST_MÄRKESKOD = ""
 		let MÄRKESKOD = ""
@@ -253,7 +253,7 @@ $(document).ready(function () {
 
 		download(FIRST_MÄRKESKOD, FIL_OBJEKT)
 
-		function download(MÄRKESKOD, FIL_OBJEKT) {
+		function download(FIRST_MÄRKESKOD, FIL_OBJEKT) {
 			let downloadType = ""
 
 			if (FIRST_MÄRKESKOD == "VO") {
@@ -261,7 +261,7 @@ $(document).ready(function () {
 					[FIL_OBJEKT],
 					{type: "text/csv;charset=utf-8"}
 				);
-				saveAs(blob, `${MÄRKESKOD}-Beställning.csv`)
+				saveAs(blob, `Beställning ${fileName.split(".")[0]}.csv`)
 				downloadType = "Volvo_CSV"
 			}
 			if (FIRST_MÄRKESKOD == "EV") {
@@ -273,8 +273,6 @@ $(document).ready(function () {
 		}
 
 		function notifyDownload(downloadType, mk) {
-			console.warn("REEEEEEEE")
-
 			let downloadNotify = `
 				<span>Laddade ner en fil för märkeskoden <strong>${mk}</strong> med typen <strong>${downloadType}</strong>!</span>
 			`
