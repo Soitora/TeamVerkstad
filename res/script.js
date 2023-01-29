@@ -3,6 +3,7 @@ $(document).ready(function () {
 	var $dragArea = $(".drag-area")
 	var $dragText = $(".header")
 	var $container = $(".container")
+	let $result = $(".result")
 	var $table = $("table")
 	var $thead = $($table).find("thead")
 	var $thtr = $($thead).find("tr")
@@ -11,7 +12,22 @@ $(document).ready(function () {
 	let $tbtd = $($tbtr).find("td")
 	var skvMärkeskod
 
+	let $button = $(".drag-area .button")
+	let $input = $(".drag-area input")
+
+	$result.hide()
+
 	let file
+
+	// Öppna fildialog när man klickar texten "Välj fil"
+	$button.on("click", function () {
+		$input.click()
+	})
+
+	$input.on("change", function () {
+		file = this.files[0]
+		displayFile()
+	})
 
 	$dragArea.on("dragenter dragstart dragend dragleave dragover drag drop", function (e) {
 		e.preventDefault()
@@ -31,9 +47,13 @@ $(document).ready(function () {
 	$dragArea.on("drop", function (e) {
 		$dragText.first().text("Dra din fil hit").next().show()
 		vanillaDragArea.classList.remove("active")
-	
-		file = e.originalEvent.dataTransfer.files[0]
 
+		file = e.originalEvent.dataTransfer.files[0]
+		displayFile()
+
+	})
+
+	function displayFile() {
 		let fileType = file.type
 		let fileName = file.name
 
@@ -66,7 +86,7 @@ $(document).ready(function () {
 		} else {
 			alert("Filen är inte en .SKV/.REG/.BST/.VO-fil")
 		}
-	})
+	}
 
 	function processFile(fileContent, fileType) {
 		let delimiter = ""
@@ -110,12 +130,9 @@ $(document).ready(function () {
 	}
 
 	function postFileProcessing(processedFile, fileName) {
-		$container.html(`<table id="processed"><thead></thead><tbody></tbody></table>`)
-
-		let fileIdentifier = `
-			<span>${file.name}</span>
-		`
-		$(".container").prepend(fileIdentifier)
+		$result.show()
+		$result.html(`<h2>Resultat</h2><h3>${file.name}</h3><div class="download-holder"><div class="primary"></div><div class="secondary"></div></div><table id="processed"><thead></thead><tbody></tbody></table>`)
+		$container.addClass("result-active")
 
 		createTable(processedFile)
 		downloader(processedFile, fileName)
@@ -181,6 +198,7 @@ $(document).ready(function () {
 
 	function downloader(file, fileName) {
 		let FIL_OBJEKT = []
+		let ORIGINAL_FIL_OBJEKT = []
 		let FIRST_MÄRKESKOD = ""
 		let MÄRKESKOD = ""
 		let ART_NR = ""
@@ -194,6 +212,9 @@ $(document).ready(function () {
 		let RAD_NUMMER = ""
 		let RAD_TYP = ""
 		let BESTÄLL_MÄRKNING = ""
+
+		// Set BOM (Byte order mark) character
+		ORIGINAL_FIL_OBJEKT += "\ufeff"
 
 		$.each(file, function(index) {
 			let row = file[index]
@@ -249,35 +270,92 @@ $(document).ready(function () {
 			if (FIRST_MÄRKESKOD == "EV") {
 				FIL_OBJEKT += [ART_NR, BESTÄLL_ANTAL].join("\t") + "\n"
 			}
+
+			ORIGINAL_FIL_OBJEKT += [BESTÄLL_ANTAL, ART_NR, BENÄMNING].join(";") + "\n"
 		})
 
-		download(FIRST_MÄRKESKOD, FIL_OBJEKT)
+		notifyDownload(FIRST_MÄRKESKOD, FIL_OBJEKT, ORIGINAL_FIL_OBJEKT)
 
-		function download(FIRST_MÄRKESKOD, FIL_OBJEKT) {
-			let downloadType = ""
+		function download(MK, FIL_OBJEKT, ORIGINAL_FIL_OBJEKT, DOWNLOAD_TYPE) {
+			console.warn(MK)
+			console.warn(DOWNLOAD_TYPE)
 
-			if (FIRST_MÄRKESKOD == "VO") {
-				let blob = new Blob(
-					[FIL_OBJEKT],
-					{type: "text/csv;charset=utf-8"}
-				);
-				saveAs(blob, `Beställning ${fileName.split(".")[0]}.csv`)
-				downloadType = "Volvo_CSV"
+			let blob
+
+			console.warn(ORIGINAL_FIL_OBJEKT)
+
+			switch (DOWNLOAD_TYPE) {
+				case "copy-clipboard":
+					navigator.clipboard.writeText(ORIGINAL_FIL_OBJEKT)
+					break
+
+				case "download-txt":
+					blob = new Blob(
+						[ORIGINAL_FIL_OBJEKT],
+						{type: "text/plain;charset=utf-8"}
+					);
+					saveAs(blob, `Textfil - ${fileName.split(".")[0]}.txt`)
+					break
+
+				case "download-csv":
+					blob = new Blob(
+						[ORIGINAL_FIL_OBJEKT],
+						{type: "text/csv;charset=utf-8"}
+					);
+					saveAs(blob, `Excelfil - ${fileName.split(".")[0]}.csv`)
+					break
+
+				case "download-vo-csv":
+					blob = new Blob(
+						[FIL_OBJEKT],
+						{type: "text/csv;charset=utf-8"}
+					);
+					saveAs(blob, `Volvo Parts Online - ${fileName.split(".")[0]}.csv`)
+					break
+
+				case "download-mb-csv":
+					blob = new Blob(
+						[FIL_OBJEKT],
+						{type: "text/csv;charset=utf-8"}
+					);
+					saveAs(blob, `SAP - ${fileName.split(".")[0]}.csv`)
+					break
+
+				case "download-pl24-csv":
+					blob = new Blob(
+						[FIL_OBJEKT],
+						{type: "text/csv;charset=utf-8"}
+					);
+					saveAs(blob, `Partslink24 - ${fileName.split(".")[0]}.csv`)
+					break
+
+				case "copy-clipboard-ev":
+					navigator.clipboard.writeText(FIL_OBJEKT)
+					break
 			}
-			if (FIRST_MÄRKESKOD == "EV") {
-				navigator.clipboard.writeText(FIL_OBJEKT)
-				downloadType = "EvoBus_Clipboard"
-			}
-
-			notifyDownload(downloadType, FIRST_MÄRKESKOD)
 		}
 
-		function notifyDownload(downloadType, mk) {
-			let downloadNotify = `
-				<span>Laddade ner en fil för märkeskoden <strong>${mk}</strong> med typen <strong>${downloadType}</strong>!</span>
-			`
+		function notifyDownload(MK, FIL_OBJEKT, ORIGINAL_FIL_OBJEKT) {
+			$(`<button id="download-txt" class="download file" type="button"><i class="far fa-file-alt"></i>Ladda ned som text-fil</button>`).appendTo($result.find(".download-holder .primary"))
+			$(`<button id="download-csv" class="download file" type="button"><i class="fa fa-file-csv"></i>Ladda ned som Excel-fil</button>`).appendTo($result.find(".download-holder .primary"))
+			$(`<button id="copy-clipboard" class="download copy" type="button"><i class="far fa-copy"></i>Kopiera till urklipp</button><br>`).appendTo($result.find(".download-holder .primary"))
 
-			$(".container").append(downloadNotify)
+			switch (MK) {
+				case "VO":
+					$(`<button id="download-vo-csv" class="download file" type="button"><img src="https://i.imgur.com/SdkOPKZ.png" height="24px" width="24px">Ladda ned Volvo Parts Online-fil</button>`).appendTo($result.find(".download-holder .secondary"))
+					break
+				case "MB":
+					$(`<button id="download-mb-csv" class="download file" type="button"><img src="https://i.imgur.com/lFJUbvW.jpg" height="24px" width="24px">Ladda ned Mercedes SAP-fil</button>`).appendTo($result.find(".download-holder .secondary"))
+					$(`<button id="download-pl24-csv" class="download file" type="button"><img src="https://i.imgur.com/ia72X1z.jpg" height="24px" width="24px">Ladda ned Partslink24-fil</button>`).appendTo($result.find(".download-holder .secondary"))
+					break
+				case "EV":
+					$(`<button id="copy-clipboard-ev" class="download copy" type="button"><img src="https://www.omniplus-on.com/favicon-192x192.png" height="24px" width="24px">Kopiera som OmniPlus urklipp</button>`).appendTo($result.find(".download-holder .secondary"))
+					break
+			}
+
+			$("button.download").click(function() {
+				download(MK, FIL_OBJEKT, ORIGINAL_FIL_OBJEKT, $(this).attr("id"))
+			})
 		}
 	}
 })
