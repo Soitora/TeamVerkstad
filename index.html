@@ -11,15 +11,34 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" type="text/javascript"></script>
 	<script src="https://cdn.jsdelivr.net/npm/dm-file-uploader@1.0.2/src/js/jquery.dm-uploader.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+	<script src="res/fileinput.js" type="text/javascript"></script>
 	<script src="res/script.js" type="text/javascript"></script>
 </head>
 	<body>
+		<div>
+			<h1>WinAssist Konverterare</h1>
+			<p>Konvertera <code>.SAP</code> filer till leverantörs-specifika filer.</p>
+		</div>
 		<form id="form">
 			<input type="file" accept=".skv" id="fileInput" title="Ladda upp beställningsfil" placeholder="Ladda upp beställningsfil">
 		</form>
-		<button id="manualChassi" style="display: none;">Lägg till chassinummer</button>
-		<button id="saveButton" style="display: none;">Spara som textfil</button>
-		<table id="table" style="display: none;">
-		</table>
+		<br>
+		<div>
+			<div>
+				<button id="manualChassi" style="display: none;">Lägg till chassinummer</button>
+			</div>
+			<div class="mainButtons">
+				<button id="saveButtonText" style="display: none;">Spara som Text</button>
+				<button id="saveButtonExcel" style="display: none;">Spara som Excel</button>
+				<button id="copyButton" style="display: none;">Kopiera till Urklipp</button>
+			</div>
+			<div class="extraButtons">
+				<button id="saveVolvoPartsOnline" style="display: none;">Volvo Parts Online</button>
+				<button id="saveVehoSAP" style="display: none;">Mercedes SAP</button>
+				<button id="savePartslink24" style="display: none;">Partslink24</button>
+				<button id="copyOmniplus" style="display: none;">OmniPlus</button>
+			</div>
+		</div>
+		<table id="table" style="display: none;"></table>
 	</body>
 </html>
