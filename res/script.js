@@ -9,17 +9,17 @@ $(document).ready(function () {
 
 	let DATE = "";
 	let MÄRKESKOD = "";
-	let ART_NR = "";
+	let ARTIKELNUMMER = "";
 	let BENÄMNING = "";
-	let BESTÄLL_ANTAL = "";
+	let BESTÄLLNINGSANTAL = "";
 	let LISTA_ID = "";
 	let AO_NUMMER = "";
-	let REG_NUMMER = "";
-	let CHASSI_NUMMER = "";
+	let REGNUMMER = "";
+	let CHASSINUMMER = "";
 	let BESTÄLL_MÄRKNING = "";
 
 	$("#manualChassi").on("click", function () {
-		CHASSI_NUMMER = prompt("Ange chassinummer");
+		CHASSINUMMER = prompt("Ange chassinummer");
 		$("#form").submit();
 	});
 
@@ -38,48 +38,58 @@ $(document).ready(function () {
 		DATE = file.name.split("_")[1];
 
 		if (file.name.split(".")[1] === "skv") {
-			reader.readAsText(file);
+			reader.readAsText(file, "ISO-8859-1");
 			reader.onload = function (e) {
 				let headers, variables;
 				data = e.target.result;
 				rows = data.replace(/\n$/, "").split("\n");
 				table.empty();
 
+				let array = [];
 				// Loop through the uploaded content to create table data rows
 				dataRow += "<tbody>";
 				for (var i = 1; i < rows.length; i++) {
 					cells = rows[i].split(";");
-					ART_NR = cells[0];
-					BENÄMNING = cells[1];
-					BESTÄLL_ANTAL = cells[2];
-					AO_NUMMER = cells[4];
-					REG_NUMMER = cells[5];
+					ARTIKELNUMMER = cells[0].trim();
+					BENÄMNING = cells[1].trim();
+					BESTÄLLNINGSANTAL = cells[2].trim();
+					AO_NUMMER = cells[4].trim();
+					REGNUMMER = cells[5].trim();
 
 					// Loop through the variables array to create table data cells
-					variables = [MÄRKESKOD, ART_NR, BENÄMNING, BESTÄLL_ANTAL, AO_NUMMER, REG_NUMMER, CHASSI_NUMMER]
+					variables = [MÄRKESKOD, ARTIKELNUMMER, BENÄMNING, BESTÄLLNINGSANTAL, AO_NUMMER, REGNUMMER, CHASSINUMMER]
 					dataRow += "<tr>";
 					for (var j = 0; j < variables.length; j++) {
-						if (variables[j]) {
-							dataRow += `<td>${variables[j]}</td>`;
-						}
+						dataRow += `<td>${variables[j]}</td>`;
 					}
 					dataRow += "</tr>";
 
+					// Push the variables as a named object to the array
+					array.push({
+						ARTIKELNUMMER: ARTIKELNUMMER,
+						BENÄMNING: BENÄMNING,
+						BESTÄLLNINGSANTAL: BESTÄLLNINGSANTAL,
+						AO_NUMMER: AO_NUMMER,
+						REGNUMMER: REGNUMMER
+					})
+
 				}
 				dataRow += "</tbody>";
+				console.warn(array)
 
 				// Loop through the headers array to create table header cells
-				headers = ['Märkeskod', 'Artikelnummer', 'Benämning', 'Beställningsantal', 'AO-nummer', 'Regnummer', 'Chassinummer'];
+				headers = ["Märkeskod", "Artikelnummer", "Benämning", "Beställningsantal", "AO-nummer", "Regnummer", "Chassinummer"];
+				headers = headers.map(header => header.toUpperCase().replace(/-/g, "_"));
 				headerRow = "<thead><tr>";
-				for (var j = 0; j < variables.length; j++) {
-					if (variables[j]) {
-						headerRow += `<th>${headers[j]}</th>`;
+				for (var i = 0; i < headers.length; i++) {
+					if (array.some(obj => obj[headers[i]])) {
+						headerRow += `<th>${headers[i]}</th>`;
 					}
 				}
 				headerRow += "</tr></thead>";
 
-				table.append(dataRow);
 				table.prepend(headerRow);
+				table.append(dataRow);
 
 				saveButton.show();
 				manualChassi.show();
@@ -109,3 +119,4 @@ $(document).ready(function () {
 		a.click();
 	});
 });
+
