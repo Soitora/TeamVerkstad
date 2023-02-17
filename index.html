@@ -5,7 +5,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WinAssist Konverterare - Team Verkstad</title>
 	<link href="https://teamverkstad.se/wp-content/uploads/2022/09/Team-Verkstad-Logo.png" rel="icon">
-	<link href="res/style.css" rel="stylesheet" type="text/css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" type="text/javascript"></script>
@@ -13,6 +12,18 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 	<script src="res/fileinput.js" type="text/javascript"></script>
 	<script src="res/script.js" type="text/javascript"></script>
+	<script>
+		if (window.matchMedia("(prefers-color-scheme: dark)").media === "not all") {
+			document.documentElement.style.display = "none";
+			document.head.insertAdjacentHTML(
+				"beforeend",
+				"<link rel='stylesheet' href='/light.css' onload='document.documentElement.style.display = \"\"'>",
+			)
+		}
+	</script>
+	<link rel="stylesheet" href="res/dark.css" media="(prefers-color-scheme: dark)" />
+	<link rel="stylesheet" href="res/light.css" media="(prefers-color-scheme: light)" />
+	<link rel="stylesheet" href="res/style.css" />
 </head>
 	<body>
 		<div>
