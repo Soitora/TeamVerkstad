@@ -3,6 +3,7 @@ $(document).ready(function () {
 	let $form = $("#form");
 	let $fileInput = $("#fileInput");
 	let $manualChassi = $("#manualChassi");
+	let $manualKey = $("#manualKey");
 	let $saveButtonText = $("#saveButtonText");
 	let $saveButtonExcel = $("#saveButtonExcel");
 	let $copyButton = $("#copyButton");
@@ -21,6 +22,7 @@ $(document).ready(function () {
 	let AO_NUMMER = "";
 	let REGNUMMER = "";
 	let CHASSINUMMER = "";
+	let NYCKELNUMMER = "";
 	let BESTÄLL_MÄRKNING = "";
 
 	var GLOBAL_DATA = [];
@@ -29,6 +31,11 @@ $(document).ready(function () {
 
 	$manualChassi.on("click", function () {
 		CHASSINUMMER = prompt("Ange chassinummer");
+		$form.submit();
+	});
+
+	$manualKey.on("click", function () {
+		NYCKELNUMMER = prompt("Ange nyckelnummer");
 		$form.submit();
 	});
 
@@ -79,7 +86,7 @@ $(document).ready(function () {
 
 
 					// Loop through the variables array to create table data cells
-					variables = [MÄRKESKOD, ARTIKELNUMMER, BENÄMNING, BESTÄLLNINGSANTAL, AO_NUMMER, REGNUMMER, CHASSINUMMER]
+					variables = [MÄRKESKOD, ARTIKELNUMMER, BENÄMNING, BESTÄLLNINGSANTAL, AO_NUMMER, REGNUMMER, CHASSINUMMER, NYCKELNUMMER]
 					dataRow += "<tr>";
 					for (var j = 0; j < variables.length; j++) {
 						dataRow += `<td>${variables[j]}</td>`;
@@ -97,6 +104,7 @@ $(document).ready(function () {
 						AO_nummer: AO_NUMMER,
 						Regnummer: REGNUMMER,
 						Chassinummer: CHASSINUMMER,
+						Nyckelnummer: NYCKELNUMMER,
 						Märkning: BESTÄLL_MÄRKNING,
 					})
 
@@ -105,11 +113,10 @@ $(document).ready(function () {
 				console.warn(GLOBAL_DATA)
 
 				// Loop through the headers array to create table header cells
-				headers = ["Märkeskod", "Artikelnummer", "Benämning", "Beställningsantal", "AO-nummer", "Regnummer", "Chassinummer"];
-				headers = headers.map(header => header.toUpperCase().replace(/-/g, "_"));
+				headers = ["MK", "Artikelnummer", "Benämning", "Antal", "Arbetsorder", "Regnummer", "Chassinummer", "Nyckelnummer"];
 				headerRow = "<thead><tr>";
 				for (var i = 0; i < headers.length; i++) {
-					if (GLOBAL_DATA.some(obj => obj[headers[i]])) {
+					if (headers[i]) {
 						headerRow += `<th>${headers[i]}</th>`;
 					}
 				}
@@ -121,8 +128,26 @@ $(document).ready(function () {
 				$saveButtonText.show();
 				$saveButtonExcel.show();
 				$copyButton.show();
-				$manualChassi.show();
 				$table.show();
+
+				// Hide empty columns
+				$table.each(function(a, tbl) {
+					console.log(a)
+					console.log(tbl)
+					var currentTableRows = $(tbl).find("tbody tr").length;
+					$(tbl).find("th").each(function(i) {
+						var remove = 0;
+						var currentTable = $(this).parents("table");
+
+						var tds = currentTable.find("tr td:nth-child(" + (i + 1) + ")");
+						tds.each(function(j) { if ($(this).text().trim() === "") remove++; });
+
+						if (remove == currentTableRows) {
+							$(this).hide();
+							tds.hide();
+						}
+					});
+				});
 			};
 
 			revealExtraButtons(MÄRKESKOD);
@@ -175,7 +200,7 @@ $(document).ready(function () {
 					fileType = "text/csv;charset=utf-8"
 					fileName = `Excel ${MÄRKESKOD} - ${DATE}.csv`
 					for (var i = 0; i < GLOBAL_DATA.length; i++) {
-						FILE_FORMAT += [GLOBAL_DATA[i].Artikelnummer, GLOBAL_DATA[i].Beställningsantal].join("\t") + "\n"
+						FILE_FORMAT += [GLOBAL_DATA[i].Artikelnummer, GLOBAL_DATA[i].Beställningsantal].join(";") + "\n"
 					}
 					break;
 				case "volvopartsonline":
@@ -191,7 +216,7 @@ $(document).ready(function () {
 					fileType = "text/csv;charset=utf-8"
 					fileName = `Veho SAP - ${DATE}.csv`
 					for (var i = 0; i < GLOBAL_DATA.length; i++) {
-						FILE_FORMAT += [GLOBAL_DATA[i].Artikelnummer, GLOBAL_DATA[i].Beställningsantal, "", GLOBAL_DATA[i].Chassinummer, GLOBAL_DATA[i].Märkning.replaceAll("KST 23", "K23")].join(";") + "\n"
+						FILE_FORMAT += [GLOBAL_DATA[i].Artikelnummer, GLOBAL_DATA[i].Beställningsantal, GLOBAL_DATA[i].Nyckelnummer, GLOBAL_DATA[i].Chassinummer, GLOBAL_DATA[i].Märkning.replaceAll("KST 23", "K23")].join(";") + "\n"
 					}
 					break;
 				case "partslink24":
@@ -248,6 +273,8 @@ $(document).ready(function () {
 			case "MB":
 				$saveVehoSAP.show();
 				$savePartslink24.show();
+				$manualChassi.show();
+				$manualKey.show();
 				break;
 			case "EV":
 				$copyOmniplus.show();
