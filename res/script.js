@@ -11,7 +11,7 @@ $(document).ready(function () {
 	let $saveVehoSAP = $("#saveVehoSAP");
 	let $savePartslink24 = $("#savePartslink24");
 	let $copyOmniplus = $("#copyOmniplus");
-	let $table = $("#table");
+	let $table = $("#convertedTable");
 
 	let DATE = "";
 	let MÄRKESKOD = "";
@@ -49,7 +49,7 @@ $(document).ready(function () {
 
 		let file = $fileInput.prop("files")[0];
 		let reader = new FileReader();
-		let data, rows, cells, headerRow, dataRow
+		let data, rows, cells, headerRow = "", dataRow = "";
 
 		MÄRKESKOD = file.name.split("_")[0];
 		DATE = file.name.split("_")[1].split(".")[0];
@@ -141,11 +141,14 @@ $(document).ready(function () {
 						tds.each(function(j) { if ($(this).text().trim() === "") remove++; });
 
 						if (remove == currentTableRows) {
-							$(this).hide();
+							$(this).addClass().hide();
 							tds.hide();
 						}
 					});
 				});
+
+				$table.find("th:visible:first").addClass("firstVisible");
+				$table.find("th:visible:last").addClass("lastVisible");
 			};
 
 			revealExtraButtons(MÄRKESKOD);

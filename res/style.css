@@ -9,183 +9,65 @@ a {
 	color: #0033cc;
 }
 
-.customfile {
-	font-size: 62.5%;
+#convertedTable {
+	font-size: 0.9em;
+	font-family: sans-serif;
+	min-width: 400px;
+	box-shadow: 0px 0px 7px rgb(0 0 0 / 15%);
+	border-radius: 8px;
+	border-collapse: collapse;
 }
 
-fieldset {
-	padding: 0.6em 0;
-	border: 0;
-	border-top: 1px dotted #ddd;
+#convertedTable thead th {
+    background-color: var(--tertiary);
+    color: var(--color);
 }
 
-legend {
-	font-size: 1.5em;
-	font-weight: bold;
-	color: #555;
-	padding: 0.5em 1em 0.5em 0;
-	background: #fff;
+#convertedTable thead .firstVisible {
+    border-top-left-radius: 8px;
 }
 
-label {
-	font-size: 1.4em;
-	display: block;
-	margin: 0.5em 10px 0.5em 0;
+#convertedTable thead .lastVisible {
+	border-top-right-radius: 8px;
 }
 
-input#upload {
-	background-color: var(--primary);
-	padding: 0.4em 1.2em;
-	border: 1px solid #aaa;
-	color: #222;
-	font-size: 1.2em;
-	font-weight: bold;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-	cursor: pointer;
-	margin: 2em 0;
+#convertedTable th,
+#convertedTable td {
+    padding: 12px 15px;
 }
 
-input#upload:hover {
-	background-color: #eee;
-	color: #111;
-	border-color: #777;
+#convertedTable tbody tr {
+    border-bottom: 1px solid var(--background-color);
 }
 
-/*custom upload elements*/
-.customfile-input {
-	position: absolute;
-	height: 100px;
-	cursor: pointer;
-	background: transparent;
-	border: 0;
-	opacity: 0;
-	-moz-opacity: 0;
-	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
-	z-index: 999;
+#convertedTable tbody tr:nth-of-type(even) {
+    background-color: var(--on-background-color);
 }
 
-.customfile {
-	width: 400px;
-	background-color: var(--primary);
-	cursor: pointer;
-	overflow: hidden;
-	padding: 2px;
-	border: 1px solid #444;
-	-moz-border-radius: 7px;
-	-webkit-border-radius: 7px;
-	border-radius: 7px;
-	position: relative;
+#convertedTable tbody tr:last-of-type {
+	border-bottom-left-radius: 8px;
+	border-bottom-right-radius: 8px;
 }
-.customfile-disabled {
-	opacity: 0.5;
-	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
-	cursor: default;
+
+
+#convertedTable tbody tr:hover {
+    color: #009879;
 }
-.customfile-feedback {
-	display: block;
-	margin: 1px 1px 1px 5px;
-	font-size: 1.2em;
-	color: #fff;
-	padding: 0.3em 0.6em;
+
+#convertedTable th:nth-child(2), #convertedTable td:nth-child(2),
+#convertedTable th:nth-child(3), #convertedTable td:nth-child(3) {
+	text-align: left;
 }
-.customfile-feedback-populated {
-	color: #fff;
-	font-style: normal;
-	font-weight: bold;
-	padding-left: 20px;
-	background: url(../images/icon-generic.gif) left 4px no-repeat;
-}
-.customfile-button {
-	border: 1px solid #999;
-	background: var(--secondary);
-	color: #fff;
-	font-weight: bold;
-	float: right;
-	width: 50px;
-	padding: 0.3em 0.6em;
+
+#convertedTable th:nth-child(1), #convertedTable td:nth-child(1),
+#convertedTable th:nth-child(4), #convertedTable td:nth-child(4),
+#convertedTable th:nth-child(5), #convertedTable td:nth-child(5),
+#convertedTable th:nth-child(6), #convertedTable td:nth-child(6),
+#convertedTable th:nth-child(7), #convertedTable td:nth-child(7) {
 	text-align: center;
-	text-decoration: none;
-	font-size: 1.2em;
-	-moz-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-}
-.customfile-hover .customfile-button,
-.customfile-focus .customfile-button {
-	color: #111;
-	background: #aaa url(../images/bg-btn.png) bottom repeat-x;
-	border-color: #aaa;
-	padding: 0.3em 0.6em;
-}
-.customfile-focus .customfile-button {
-	outline: 1px dotted #ccc;
 }
 
-/*file type icons*/
-.customfile-ext-jpg,
-.customfile-ext-gif,
-.customfile-ext-png,
-.customfile-ext-jpeg,
-.customfile-ext-bmp {
-	background-image: url(../images/icon-image.gif);
-}
-.customfile-ext-mp3,
-.customfile-ext-mp4,
-.customfile-ext-mov,
-.customfile-ext-swf,
-.customfile-ext-wav,
-.customfile-ext-m4v {
-	background-image: url(../images/icon-media.gif);
-}
-.customfile-ext-zip,
-.customfile-ext-tar,
-.customfile-ext-sit {
-	background-image: url(../images/icon-zip.gif);
-}
-
-
-@media (prefers-color-scheme: dark) {
-	body {
-		color: #eee;
-		background: #121212;
-	}
-
-	body a {
-		color: #809fff;
-	}
-
-	fieldset {
-		border-top: 1px dotted #ddd;
-	}
-
-	legend {
-		color: #555;
-		background: #fff;
-	}
-
-	input#upload {
-		background: #aaa url(../images/bg-btn.png) bottom repeat-x;
-		border: 1px solid #aaa;
-		color: #222;
-	}
-
-	input#upload:hover {
-		background: #eee;
-		color: #111;
-		border-color: #777;
-	}
-
-	.customfile-feedback {
-		color: #fff;
-	}
-	.customfile-feedback-populated {
-		color: #fff;
-	}
-	.customfile-button {
-		border: 1px solid #999;
-		background: #333 url(../images/bg-submit.gif) bottom repeat-x;
-		color: #fff;
-	}
+#convertedTable td:nth-child(2),
+#convertedTable td:nth-child(4) {
+	font-weight: bold;
 }
