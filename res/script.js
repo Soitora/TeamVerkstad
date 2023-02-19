@@ -19,7 +19,7 @@ $(document).ready(function () {
 	let BENÄMNING = "";
 	let BESTÄLLNINGSANTAL = "";
 	let LISTA_ID = "";
-	let AO_NUMMER = "";
+	let ARBETSORDER = "";
 	let REGNUMMER = "";
 	let CHASSINUMMER = "";
 	let NYCKELNUMMER = "";
@@ -70,23 +70,23 @@ $(document).ready(function () {
 					BENÄMNING = cells[1].trim();
 					BESTÄLLNINGSANTAL = cells[2].trim();
 					LISTA_ID = cells[3].trim();
-					AO_NUMMER = cells[4].trim();
+					ARBETSORDER = cells[4].trim();
 					REGNUMMER = cells[5].trim();
 					BESTÄLL_MÄRKNING = "KST 23"
 
-					if (!AO_NUMMER && !REGNUMMER) {
+					if (!ARBETSORDER && !REGNUMMER) {
 						BESTÄLL_MÄRKNING += ` Lager`;
 					} else if (!REGNUMMER) {
-						BESTÄLL_MÄRKNING += ` ${AO_NUMMER}`;
-					} else if (!AO_NUMMER) {
+						BESTÄLL_MÄRKNING += ` ${ARBETSORDER}`;
+					} else if (!ARBETSORDER) {
 						BESTÄLL_MÄRKNING += ` ${REGNUMMER}`;
 					} else {
-						BESTÄLL_MÄRKNING += ` ${REGNUMMER} AO${AO_NUMMER}`;
+						BESTÄLL_MÄRKNING += ` ${REGNUMMER} AO${ARBETSORDER}`;
 					}
 
 
 					// Loop through the variables array to create table data cells
-					variables = [MÄRKESKOD, ARTIKELNUMMER, BENÄMNING, BESTÄLLNINGSANTAL, AO_NUMMER, REGNUMMER, CHASSINUMMER, NYCKELNUMMER]
+					variables = [MÄRKESKOD, ARTIKELNUMMER, BENÄMNING, BESTÄLLNINGSANTAL, ARBETSORDER, REGNUMMER, CHASSINUMMER, NYCKELNUMMER]
 					dataRow += "<tr>";
 					for (var j = 0; j < variables.length; j++) {
 						dataRow += `<td>${variables[j]}</td>`;
@@ -101,7 +101,7 @@ $(document).ready(function () {
 						Artikelnummer: ARTIKELNUMMER,
 						Benämning: BENÄMNING,
 						Beställningsantal: BESTÄLLNINGSANTAL,
-						AO_nummer: AO_NUMMER,
+						ARBETSORDER: ARBETSORDER,
 						Regnummer: REGNUMMER,
 						Chassinummer: CHASSINUMMER,
 						Nyckelnummer: NYCKELNUMMER,
@@ -117,7 +117,7 @@ $(document).ready(function () {
 				headerRow = "<thead><tr>";
 				for (var i = 0; i < headers.length; i++) {
 					if (headers[i]) {
-						headerRow += `<th>${headers[i]}</th>`;
+						headerRow += `<th id="${headers[i]}">${headers[i]}</th>`;
 					}
 				}
 				headerRow += "</tr></thead>";
@@ -132,8 +132,6 @@ $(document).ready(function () {
 
 				// Hide empty columns
 				$table.each(function(a, tbl) {
-					console.log(a)
-					console.log(tbl)
 					var currentTableRows = $(tbl).find("tbody tr").length;
 					$(tbl).find("th").each(function(i) {
 						var remove = 0;
@@ -281,4 +279,3 @@ $(document).ready(function () {
 		}
 	}
 });
-
