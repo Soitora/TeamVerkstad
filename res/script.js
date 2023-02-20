@@ -64,7 +64,7 @@ $(document).ready(function () {
 
 				// Loop through the uploaded content to create table data rows
 				dataRow += "<tbody>";
-				for (var i = 1; i < rows.length; i++) {
+				for (var i = 0; i < rows.length; i++) {
 					cells = rows[i].split(";");
 					ARTIKELNUMMER = cells[0].trim();
 					BENÄMNING = cells[1].trim();
