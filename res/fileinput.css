@@ -1,0 +1,69 @@
+.customfile {
+	font-size: 62.5%;
+	margin: 4px 8px 4px 8px;
+}
+
+.customfile-input {
+	position: absolute;
+	height: 100px;
+	cursor: pointer;
+	background: transparent;
+	border: 0;
+	opacity: 0;
+	-moz-opacity: 0;
+	filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+	z-index: 999;
+}
+
+
+.customfile {
+	width: 400px;
+	background-color: var(--on-background-color);
+	cursor: pointer;
+	overflow: hidden;
+	padding: 2px;
+	border: 1px solid var(--primary);
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	position: relative;
+}
+
+.customfile-disabled {
+	opacity: 0.5;
+	cursor: default;
+}
+
+.customfile-feedback {
+	display: block;
+	margin: 1px 1px 1px 5px;
+	font-size: 1.2em;
+	font-weight: bold;
+	color: var(--color);
+	padding: 0.3em 0.6em;
+}
+
+.customfile-feedback-populated {
+	padding-left: 20px;
+	background: url(../images/file.gif) left 4px no-repeat;
+}
+
+.customfile-button {
+	border: 1px solid #999;
+	background: var(--secondary);
+	color: var(--on-color);
+	font-weight: bold;
+	float: right;
+	width: 50px;
+	padding: 0.3em 0.6em;
+	text-align: center;
+	text-decoration: none;
+	font-size: 1.2em;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	border-radius: 6px;
+}
+
+.customfile-hover .customfile-button {
+	background: var(--tertiary);
+}

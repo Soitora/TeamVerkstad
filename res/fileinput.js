@@ -61,8 +61,7 @@
 		//create custom control button
 		var uploadButton = $("<span class='customfile-button' aria-hidden='true'>Välj fil</span>").appendTo(upload);
 		//create custom control feedback
-		var uploadFeedback = $("<span class='customfile-feedback' aria-hidden='true'>Ingen fil vald...</span>").appendTo(upload);
-
+		var uploadFeedback = $("<span class='customfile-feedback' aria-hidden='true'>Ingen fil vald...</span>").insertAfter(uploadButton);
 		//match disabled state
 		if(fileInput.is("[disabled]")){
 			fileInput.trigger("disable");

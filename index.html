@@ -23,7 +23,8 @@
 	</script>
 	<link rel="stylesheet" href="res/dark.css" media="(prefers-color-scheme: dark)" />
 	<link rel="stylesheet" href="res/light.css" media="(prefers-color-scheme: light)" />
-	<link rel="stylesheet" href="res/customFile.css" />
+	<link rel="stylesheet" href="res/fileinput.css" />
+	<link rel="stylesheet" href="res/table.css" />
 	<link rel="stylesheet" href="res/style.css" />
 </head>
 	<body>
@@ -34,24 +35,52 @@
 		<form id="form">
 			<input type="file" accept=".skv" id="fileInput" title="Ladda upp beställningsfil" placeholder="Ladda upp beställningsfil">
 		</form>
-		<br>
 		<div>
 			<div>
-				<button id="manualChassi" style="display: none;">Lägg till chassinummer</button>
-				<button id="manualKey" style="display: none;">Lägg till nyckelnummer</button>
+				<button id="manualChassi" style="display: none;">
+					<i class="far fa-file-alt"></i>
+					Lägg till chassinummer
+				</button>
+				<button id="manualKey" style="display: none;">
+					<i class="far fa-file-alt"></i>
+					Lägg till nyckelnummer
+				</button>
 			</div>
+			<br>
 			<div class="mainButtons">
-				<button id="saveButtonText" style="display: none;">Spara som Text</button>
-				<button id="saveButtonExcel" style="display: none;">Spara som Excel</button>
-				<button id="copyButton" style="display: none;">Kopiera till Urklipp</button>
+				<button id="saveButtonText" style="display: none;">
+					<i class="far fa-file-alt"></i>
+					Spara som Text
+				</button>
+				<button id="saveButtonExcel" style="display: none;">
+					<i class="fa fa-file-csv"></i>
+					Spara som Excel
+				</button>
+				<button id="copyButton" style="display: none;">
+					<i class="far fa-copy"></i>
+					Kopiera till Urklipp
+				</button>
 			</div>
 			<div class="extraButtons">
-				<button id="saveVolvoPartsOnline" style="display: none;">Volvo Parts Online</button>
-				<button id="saveVehoSAP" style="display: none;">Mercedes SAP</button>
-				<button id="savePartslink24" style="display: none;">Partslink24</button>
-				<button id="copyOmniplus" style="display: none;">OmniPlus</button>
+				<button id="saveVolvoPartsOnline" style="display: none;">
+					<img src="https://i.imgur.com/SdkOPKZ.png" height="24px" width="24px">
+					Volvo Parts Online
+				</button>
+				<button id="saveVehoSAP" style="display: none;">
+					<img src="https://i.imgur.com/lFJUbvW.jpg" height="24px" width="24px">
+					Mercedes SAP
+				</button>
+				<button id="savePartslink24" style="display: none;">
+					<img src="https://i.imgur.com/ia72X1z.jpg" height="24px" width="24px">
+					Partslink24
+				</button>
+				<button id="copyOmniplus" style="display: none;">
+					<img src="https://www.omniplus-on.com/favicon-192x192.png" height="24px" width="24px">
+					OmniPlus eShop
+				</button>
 			</div>
 		</div>
+		<br>
 		<table id="convertedTable" style="display: none;"></table>
 	</body>
 </html>

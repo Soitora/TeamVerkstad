@@ -9,65 +9,47 @@ a {
 	color: #0033cc;
 }
 
-#convertedTable {
-	font-size: 0.9em;
-	font-family: sans-serif;
-	min-width: 400px;
-	box-shadow: 0px 0px 7px rgb(0 0 0 / 15%);
-	border-radius: 8px;
-	border-collapse: collapse;
+button {
+	border: none;
+	border-radius: 6px;
+	color: var(--on-color);
+	flex-grow: 1;
+	font-family: SFProText-Regular, Helvetica, Arial, sans-serif;
+	font-size: 15px;
+	height: 36px;
+	line-height: 20px;
+	margin: 4px 8px 4px 8px;
+	min-width: 185px;
+	padding: 0 16px 0 16px;
+	transition: 0.3s;
+	cursor: pointer;
+	gap: 10px;
+	display: inline-flex;
+	align-items: center;
+	background-color: var(--button-bg);
+	color: var(--color);
 }
 
-#convertedTable thead th {
-    background-color: var(--tertiary);
-    color: var(--color);
+button:hover{
+	background-color: var(--button-bg-hover) !important;
+	color: #050505 !important;
+	font-size: 15px;
+	transition: 0.3s;
 }
 
-#convertedTable thead .firstVisible {
-    border-top-left-radius: 8px;
+button#saveButtonText {
+	background-color: var(--button-bg-save-text);
 }
 
-#convertedTable thead .lastVisible {
-	border-top-right-radius: 8px;
+button#saveButtonExcel {
+	background-color: var(--button-bg-save-excel);
 }
 
-#convertedTable th,
-#convertedTable td {
-    padding: 12px 15px;
+button#copyButton {
+	background-color: var(--button-bg-copy);
 }
 
-#convertedTable tbody tr {
-    border-bottom: 1px solid var(--background-color);
-}
-
-#convertedTable tbody tr:nth-of-type(even) {
-    background-color: var(--on-background-color);
-}
-
-#convertedTable tbody tr:last-of-type {
-	border-bottom-left-radius: 8px;
-	border-bottom-right-radius: 8px;
-}
-
-
-#convertedTable tbody tr:hover {
-    color: #009879;
-}
-
-#convertedTable th:nth-child(2), #convertedTable td:nth-child(2),
-#convertedTable th:nth-child(3), #convertedTable td:nth-child(3) {
-	text-align: left;
-}
-
-#convertedTable th:nth-child(1), #convertedTable td:nth-child(1),
-#convertedTable th:nth-child(4), #convertedTable td:nth-child(4),
-#convertedTable th:nth-child(5), #convertedTable td:nth-child(5),
-#convertedTable th:nth-child(6), #convertedTable td:nth-child(6),
-#convertedTable th:nth-child(7), #convertedTable td:nth-child(7) {
-	text-align: center;
-}
-
-#convertedTable td:nth-child(2),
-#convertedTable td:nth-child(4) {
-	font-weight: bold;
+button#manualChassi,
+button#manualKey {
+	background-color: var(--primary);
 }

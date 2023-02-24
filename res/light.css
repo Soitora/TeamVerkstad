@@ -1,8 +1,14 @@
 :root {
 	--color: #233142;
+	--on-color: #fefefe;
 	--background-color: #fefefe;
-	--on-background-color: #fafafa;
-	--primary: #f95959;
-	--secondary: #455d7a;
-	--tertiary: #e3e3e3;
+	--on-background-color: #f7f7f7;
+	--primary: #d6d5d5;
+	--secondary: #6988ae;
+	--tertiary: #5082f7;
+	--button-bg: #e5e6eb;
+	--button-bg-hover: #d9dbe0;
+	--button-bg-save-text: #c9dbf3;
+	--button-bg-save-excel: #92df92;
+	--button-bg-copy: #e8d4f3;
 }

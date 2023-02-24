@@ -59,6 +59,7 @@ $(document).ready(function () {
 			reader.onload = function (e) {
 				let headers, variables;
 				data = e.target.result;
+				console.log(data)
 				rows = data.replace(/\n$/, "").split("\n");
 				$table.empty();
 
@@ -146,6 +147,10 @@ $(document).ready(function () {
 						}
 					});
 				});
+
+				$("tr").each(function() {
+					$(this).children().eq(4)
+				})
 
 				$table.find("th:visible:first").addClass("firstVisible");
 				$table.find("th:visible:last").addClass("lastVisible");
@@ -264,6 +269,8 @@ $(document).ready(function () {
 		$saveVehoSAP.hide();
 		$savePartslink24.hide();
 		$copyOmniplus.hide();
+		$manualChassi.hide();
+		$manualKey.hide();
 	}
 
 	function revealExtraButtons(MÄRKESKOD) {
