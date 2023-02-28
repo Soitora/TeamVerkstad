@@ -249,7 +249,7 @@ $(document).ready(function () {
 				FIL_OBJEKT += [MÄRKESKOD, ART_NR, BESTÄLL_ANTAL, BESTÄLL_MÄRKNING].join(";") + "\n"
 			}
 
-			if (FIRST_MÄRKESKOD == "MB") {
+			if (FIRST_MÄRKESKOD == "MB" || FIRST_MÄRKESKOD == "MT") {
 				BESTÄLL_MÄRKNING = "K23"
 
 				if (AO_NUMMER == "" && REG_NUMMER == "") {
@@ -345,6 +345,7 @@ $(document).ready(function () {
 					$(`<button id="download-vo-csv" class="download file" type="button"><img src="https://i.imgur.com/SdkOPKZ.png" height="24px" width="24px">Ladda ned Volvo Parts Online-fil</button>`).appendTo($result.find(".download-holder .secondary"))
 					break
 				case "MB":
+				case "MT":
 					$(`<button id="download-mb-csv" class="download file" type="button"><img src="https://i.imgur.com/lFJUbvW.jpg" height="24px" width="24px">Ladda ned Mercedes SAP-fil</button>`).appendTo($result.find(".download-holder .secondary"))
 					$(`<button id="download-pl24-csv" class="download file" type="button"><img src="https://i.imgur.com/ia72X1z.jpg" height="24px" width="24px">Ladda ned Partslink24-fil</button>`).appendTo($result.find(".download-holder .secondary"))
 					break
