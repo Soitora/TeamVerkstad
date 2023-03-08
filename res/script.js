@@ -1,4 +1,28 @@
 $(document).ready(function () {
+	// Library (Day.js)
+	dayjs.extend(window.dayjs_plugin_customParseFormat)
+	dayjs.extend(window.dayjs_plugin_relativeTime)
+	dayjs.extend(window.dayjs_plugin_updateLocale)
+	dayjs.extend(window.dayjs_plugin_isToday)
+
+	dayjs.locale("sv")
+	dayjs.updateLocale("sv", {
+	  relativeTime: {
+		past: "%s sedan",
+		s: 'några sekunder',
+		m: "1 minut",
+		mm: "%d minuter",
+		h: "1 timme",
+		hh: "%d timmar",
+		d: "1 dag",
+		dd: "%d dagar",
+		M: "1 månad",
+		MM: "%d månader",
+		y: "1 år",
+		yy: "%d år"
+	  }
+	})
+
 	// Initialize variables
 	let $form = $("#form");
 	let $fileInput = $("#fileInput");
@@ -12,6 +36,8 @@ $(document).ready(function () {
 	let $savePartslink24 = $("#savePartslink24");
 	let $copyOmniplus = $("#copyOmniplus");
 	let $table = $("#convertedTable");
+	let $orderDate = $("#orderDate");
+	let $orderCreation = $("#orderCreation");
 
 	let DATE = "";
 	let MÄRKESKOD = "";
@@ -53,6 +79,8 @@ $(document).ready(function () {
 
 		MÄRKESKOD = file.name.split("_")[0];
 		DATE = file.name.split("_")[1].split(".")[0];
+
+		generateDateInformation(DATE)
 
 		if (file.name.split(".")[1] === "skv") {
 			reader.readAsText(file, "ISO-8859-1");
@@ -279,13 +307,34 @@ $(document).ready(function () {
 				$saveVolvoPartsOnline.show();
 				break;
 			case "MB":
-				$saveVehoSAP.show();
 				$savePartslink24.show();
+				break;
+			case "MT":
+				$saveVehoSAP.show();
 				$manualChassi.show();
 				$manualKey.show();
 				break;
 			case "EV":
 				$copyOmniplus.show();
 		}
+	}
+
+	function generateDateInformation(date) {
+		date = dayjs(date, "YYMMDDHHmm")
+		let isOlderThan10Minutes = dayjs().subtract(5, "minutes") > dayjs(date)
+
+		if (dayjs(date).isToday()) {
+			$orderDate.text(date.fromNow())
+		} else {
+			$orderDate.text(date.format("dddd, D MMMM YYYY HH:mm"))
+		}
+
+		if (isOlderThan10Minutes) {
+			$orderDate.addClass("old").removeClass("new")
+		} else {
+			$orderDate.addClass("new").removeClass("old")
+		}
+
+		$orderCreation.show()
 	}
 });

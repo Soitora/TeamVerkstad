@@ -53,3 +53,19 @@ button#manualChassi,
 button#manualKey {
 	background-color: var(--primary);
 }
+
+p {
+	margin: 4px 8px 8px 8px;
+}
+
+#orderCreation {
+	margin: 8px 8px 4px 8px;
+}
+
+.old {
+	color: #d44242;
+}
+
+.new {
+	color: #3f993f;
+}
